@@ -1,0 +1,22 @@
+h3 {
+    text-decoration: underline;
+}
+
+#container-form {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 5px;
+    width: 74%;
+    margin-left: 13%;
+
+    background-color:snow;
+}
+
+#container-boutons {
+    display: flex;
+    justify-content: center;
+}
+
+#container-boutons button:first-child {
+    margin-right: 10px;
+}

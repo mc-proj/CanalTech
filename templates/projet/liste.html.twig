@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des projets{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/Projet/liste.style.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    {% for message in app.flashes('message_projet') %}
+        <div class="message-flash-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="container-bouton">
+        <button>
+            <a href="{{ path('nouveau_projet') }}" style="color: black; text-decoration: none">Créer un nouveau projet</a>
+        </button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Couleur associée</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% if projets|length > 0 %}
+                {% for projet in projets %}
+                    <tr>
+                        <td>{{ projet.nom }}</td>
+                        <td>
+                            <div style="background-color:{{ projet.couleur }}" class="div-couleur">&nbsp;</div>
+                        </td>
+                        <td>
+                            <button>
+                                <a href="{{ path('edite_projet', {'id':projet.id}) }}" class="lien-sans-style">Editer</a>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="bouton-efface-projet" data-id="{{projet.id}}">Effacer</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="4">Aucun projet disponible</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/projet/liste.script.js') }}"></script>
+{% endblock %}

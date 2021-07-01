@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/Erreurs/page404.style.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div id="contenu-404">
+        <h1>Page introuvable</h1>
+        <p>
+            La page que vous avez demandé n'a pas été touvée.<br>
+        </p>
+
+        <button>
+            <a class="lien-sans-style" href="{{ path('accueil_taches') }}">Retour vers la liste des taches</a>
+        </button>
+    </div>
+{% endblock %}

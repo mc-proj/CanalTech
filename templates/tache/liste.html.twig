@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+{% block title %}Liste des taches{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/Tache/liste.style.css') }}">
+{% endblock %}
+
+{% block body %}
+<div id="liste">
+    
+    {% for message in app.flashes('message_tache') %}
+        <div class="message-flash-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div id="div-stats">
+        <h3 id="titre-stats">Statistiques :</h3>
+        {% if taches|length > 0 %}
+            <span>nombre total de taches effectuées :  {{ stats["nombre de taches effectuees"] }}</span>
+            <span>temps total des taches : {{ stats["temps total taches"] }}</span>
+            <span>temps moyen de travail par jour : {{ stats["temps moyen par jour"] }}</span>
+        {% else %}
+            <span>nombre total de taches effectuées :  0</span>
+            <span>temps total des taches : 0</span>
+            <span>temps moyen de travail par jour : 0</span>
+        {% endif %}
+    </div>
+
+    <div class="container-bouton">
+        <button>
+            <a href="{{ path('nouvelle_tache') }}" class="lien-sans-style">Créer une nouvelle tache</a>
+        </button>
+    </div>
+
+    {% if taches|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Intitulé</th>
+                    <th>Date début</th>
+                    <th>Date fin</th>
+                    <th>facturée</th>
+                    <th>Projet lié</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for tache in taches %}
+                    <tr style="background-color: {{ tache.getProjet().getCouleur() }}">
+                        <td>{{ tache.getIntitule() }}</td>
+                        <td>{{ tache.getDateDebut()|date("d/m/Y H:i") }}</td>
+                        <td>{{ tache.getDateFin()|date("d/m/Y H:i") }}</td>
+
+                        <td id="td-facture-{{ tache.getId() }}">
+                            {% if tache.getEstFacture() %}
+                                Facturée
+                            {% else %}
+                                <button class="bouton-facture" data-id={{ tache.getId() }}>Marquer facturée</button>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ tache.getProjet().getNom() }}</td>
+
+                        <td>
+                            <button>
+                                <a href="{{ path('edite_tache', {'id':tache.id}) }}" class="lien-sans-style">Editer</a>
+                            </button>
+                        </td>
+
+                        <td>
+                            <button class="bouton-efface-tache" data-id="{{tache.id}}">Effacer</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        Aucun tache disponible
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/tache/liste.script.js') }}"></script>
+    <script>
+        let route_facture = "{{ url('route_facture') }}";
+    </script>
+{% endblock %}

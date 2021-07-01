@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau projet{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/Formulaires/commun.style.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <h3>Créer un nouveau projet</h3>
+    <div id="container-form">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <div id="container-boutons">
+                <button>Créer un nouveau projet</button>
+
+                <button>
+                    <a href="{{ path('liste_projets') }}" style="color: black; text-decoration: none">Retour à la liste des projets</a>
+                </button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/projet/cree.script.js') }}"></script>
+{% endblock %}

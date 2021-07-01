@@ -2,18 +2,26 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
+        <title>{% block title %}Canal Tech{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
-
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
+            <link rel="stylesheet" href="{{ asset('css/base.style.css') }}">
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div id="loader"></div>
+        {% block body %}
+        <h1 class="texte-centre">Test technique Canal Tech</h1>
+        <nav class="nav-sans-style texte-centre" id="nav-template">
+            <ol id="liste-nav">
+                <li class="bloc"><a class="lien-sans-style lien-nav active" href="{{ path('accueil_taches') }}">Taches</a></li> 
+                <li class="bloc"><a class="lien-sans-style lien-nav" href="{{ path('liste_projets') }}">Projets</a></li>
+            </ol>
+        </nav>
+        {% endblock %}
     </body>
+
+    {% block javascripts %}
+        <script src="{{ asset('js/base.script.js') }}"></script>
+    {% endblock %}
 </html>

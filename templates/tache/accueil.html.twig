@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block title %}Taches{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/Tache/accueil.style.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div id="container-filtre">
+        <h3>Filtrer par :</h3>
+        <div id="container-form-recherche">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="button" id="bouton-filtre">Filtrer</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <p id="liste-taches">
+        {{ include('tache/liste.html.twig', {'taches': taches}) }}
+    </p>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/tache/accueil.script.js') }}"></script>
+    <script>
+        let route_formulaire = "{{ url('accueil_taches') }}";
+    </script>
+{% endblock %}

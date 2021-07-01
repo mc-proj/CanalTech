@@ -1,0 +1,36 @@
+{% use 'form_div_layout.html.twig' %}
+
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        {% for error in errors %}
+            <div class="message-flash-danger">
+                {{ error.message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock form_errors %}
+
+{% block form_label %}
+    <span style="margin-right: 10px"> 
+        {{ parent() }}
+    </span>
+{% endblock form_label %}
+
+{% block form_row %}
+    <div style="display: flex; align-items: center; min-height: 50px">
+        {{ parent() }}
+    </div>
+{% endblock form_row %}
+
+{% block date_widget %}
+    <span style="margin: 10px;">
+    {{ parent() }}
+    </span>
+{% endblock date_widget %}
+
+{% block time_widget %}
+    <span style="margin: 10px">
+    {{ parent() }}
+    </span>
+{% endblock time_widget %}
+

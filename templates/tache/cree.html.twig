@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle tache{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/Formulaires/commun.style.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <h3>Créer une nouvelle tache</h3>
+    <div id="container-form">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <div id="container-boutons">
+                <button>Créer une nouvelle tache</button>
+
+                <button>
+                    <a href="{{ path('accueil_taches') }}" style="color: black; text-decoration: none">Retour à la liste des taches</a>
+                </button>
+            </div>  
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
