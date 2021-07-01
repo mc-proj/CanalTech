@@ -25,6 +25,41 @@ class TacheRepository extends ServiceEntityRepository
                 ->getResult();
     }
 
+
+    public function compteEffectuees($date_debut = "", $date_fin = "", $id_projet = "") {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '
+            SELECT COUNT(*) AS taches_effectuees FROM tache t
+            INNER JOIN projet
+            ON t.projet_id = projet.id    
+            WHERE t.date_fin < CURRENT_DATE()
+        ';
+
+        $options = $this->gestionFiltre($date_debut, $date_fin, $id_projet);
+        $sql .= $options["suite_requete"];
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($options["tableau_criteres"]);
+        return $stmt->fetchAllAssociative();
+    }
+
+    public function recupereTotauxTemps($date_debut = "", $date_fin = "", $id_projet = "") {
+
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '     
+            SELECT SUM(TIMESTAMPDIFF(hour, t.date_debut, t.date_fin)) AS total_heures,
+            SUM(TIMESTAMPDIFF(day, t.date_debut, t.date_fin)) AS total_jours
+            FROM tache t
+            INNER JOIN projet
+            ON t.projet_id = projet.id    
+        ';
+
+        $options = $this->gestionFiltre($date_debut, $date_fin, $id_projet);
+        $sql .= $options["suite_requete"];
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($options["tableau_criteres"]);
+        return $stmt->fetchAllAssociative();
+    }
+
     public function recupereParPeriodeOuProjet($date_debut = "", $date_fin = "", $id_projet = "") {
 
         $qb = $this->createQueryBuilder('t');
@@ -49,5 +84,38 @@ class TacheRepository extends ServiceEntityRepository
         return $qb->orderBy('t.date_debut', 'DESC')
                 ->getQuery()
                 ->getResult();
+    }
+
+    private function gestionFiltre($date_debut, $date_fin, $id_projet) {
+
+        $sql = '';
+        $criteres_dates = array();
+        $critere_projet = array();
+
+        if($date_debut !== "") {
+            $sql .= 'AND t.date_debut >= :date_debut
+                    AND t.date_fin <= :date_fin
+            ';
+
+            $criteres_dates = ([
+                'date_debut' => $date_debut,
+                'date_fin' => $date_fin,
+            ]);
+        }
+
+        if($id_projet !== "") {
+            $sql .= 'AND t.projet_id = :id_projet';
+
+            $critere_projet = ([
+                'id_projet' => $id_projet
+            ]);
+        }
+
+        $tableau_criteres = array_merge($criteres_dates, $critere_projet);
+
+        return [
+            "suite_requete" => $sql,
+            "tableau_criteres" => $tableau_criteres
+        ];
     }
 }

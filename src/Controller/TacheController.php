@@ -55,10 +55,12 @@ class TacheController extends AbstractController
 
             $taches = $this->tacheRepository->recupereParPeriodeOuProjet($donnees["date_debut"], $donnees["date_fin"], $id_projet);
 
-            if(count($taches) > 0) {
-
-                $stats = $this->donneStats($taches);
+            if($donnees["date_debut"] !== "") {
+                $donnees["date_debut"] = $donnees["date_debut"]->format('Y-m-d H:i:s');
+                $donnees["date_fin"] = $donnees["date_fin"]->format('Y-m-d H:i:s');
             }
+
+            $stats = $this->donneStats($donnees, $id_projet);
 
             return $this->render('tache/liste.html.twig', [
                 'taches' => $taches,
@@ -67,7 +69,12 @@ class TacheController extends AbstractController
         }
 
         if(count($taches) > 0) {
-            $stats = $this->donneStats($taches);
+
+            $donnees = [
+                "date_debut" => "",
+                "date_fin" => ""
+            ];
+            $stats = $this->donneStats($donnees, "");
         }
         
         return $this->render('tache/accueil.html.twig', [
@@ -190,45 +197,33 @@ class TacheController extends AbstractController
         ];
     }
 
-    private function donneStats($taches) {
+    private function donneStats($donnees, $id_projet) {
 
-        $nombre_taches_effectuees = 0;
-        $date_zero = new DateTime('00:00');
-        $clone_date_zero = clone $date_zero;
+        $nombre_taches_effectuees = $this->tacheRepository->compteEffectuees($donnees["date_debut"], $donnees["date_fin"], $id_projet);
+        $temps = $this->tacheRepository->recupereTotauxTemps($donnees["date_debut"], $donnees["date_fin"], $id_projet);
+        $nombre_taches_effectuees = $nombre_taches_effectuees[0]["taches_effectuees"];
+        $total_jours = $temps[0]["total_jours"];
+        $total_heures = $temps[0]["total_heures"] - ($total_jours * 24);
 
-        foreach($taches as $tache) {
+        $nombre_jours_concernes = $total_jours;
 
-            $debut = $tache->getDateDebut();
-            $fin = $tache->getDateFin();
-
-            if($fin < new \DateTime()) {
-                $nombre_taches_effectuees += 1;
-            }
-
-            if($fin !== null) {
-                $difference = $debut->diff($fin);
-                $date_zero->add($difference);
-            }
+        if($total_heures > 0) {
+            $nombre_jours_concernes += 1;
         }
 
-        $duree_totale_taches = $clone_date_zero->diff($date_zero);
-        $duree_totale = [
-            "heures" => $duree_totale_taches->format('%h'),
-            "jours" => $duree_totale_taches->format('%a'),
-        ];
-
-        $total_heures = $duree_totale["heures"] + $duree_totale["jours"] * 7;
-
-        if($duree_totale["heures"] > 0) {
-            $duree_totale["jours"] += 1;
+        if($nombre_jours_concernes > 0) {
+            //le calcul concidere 1 journée de travail = 7h
+            $heures_par_journee = 7;
+            $temps_moyen_journalier = (($total_jours * $heures_par_journee) + $total_heures)/$nombre_jours_concernes;
+            $temps_moyen_journalier = round($temps_moyen_journalier, 1);
+        } else {
+            $temps_moyen_journalier = 0;
         }
-
-        $temps_moyen_journalier = $total_heures/$duree_totale["jours"];
-        $temps_moyen_journalier = round($temps_moyen_journalier, 1);
+        
 
         return [
             "nombre de taches effectuees" => $nombre_taches_effectuees,
-            "temps total taches" => $duree_totale["jours"] . " jours et " . $duree_totale["heures"] . " heures",
+            "temps total taches" => $total_jours . " jours et " . $total_heures . " heures",
             "temps moyen par jour" => $temps_moyen_journalier . " heures"
         ];
     }
