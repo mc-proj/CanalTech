@@ -67,7 +67,8 @@ class ProjetController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->getDoctrine()->getManager()->flush();
+            //$this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
             $this->addFlash('message_projet', 'Le projet a bien été edité');
             return $this->redirectToRoute('liste_projets');
         }

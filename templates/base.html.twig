@@ -14,8 +14,17 @@
         <h1 class="texte-centre">Test technique Canal Tech</h1>
         <nav class="nav-sans-style texte-centre" id="nav-template">
             <ol id="liste-nav">
-                <li class="bloc"><a class="lien-sans-style lien-nav active" href="{{ path('accueil_taches') }}">Taches</a></li> 
-                <li class="bloc"><a class="lien-sans-style lien-nav" href="{{ path('liste_projets') }}">Projets</a></li>
+                {% if (app.request.attributes.get('_route') is same as "accueil_taches")
+                    or (app.request.attributes.get('_route') is same as "nouvelle_tache")
+                    or (app.request.attributes.get('_route') is same as "edite_tache")
+                    or (app.request.attributes.get('_route') is same as "supprime_tache")
+                %}
+                    <li class="bloc"><a class="lien-sans-style lien-nav active" href="{{ path('accueil_taches') }}">Taches</a></li> 
+                    <li class="bloc"><a class="lien-sans-style lien-nav" href="{{ path('liste_projets') }}">Projets</a></li>
+                {% else %}
+                    <li class="bloc"><a class="lien-sans-style lien-nav" href="{{ path('accueil_taches') }}">Taches</a></li> 
+                    <li class="bloc"><a class="lien-sans-style lien-nav active" href="{{ path('liste_projets') }}">Projets</a></li>
+                {% endif %}
             </ol>
         </nav>
         {% endblock %}

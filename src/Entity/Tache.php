@@ -27,13 +27,13 @@ class Tache
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotNull(message="Veuillez entrer une date et heure de début")
-     * @Assert\LessThan(propertyPath="date_fin", message="La date de début doit etre avant la date de fin")
+     * @Assert\LessThan(propertyPath="date_fin", message="La date de début doit etre avant la date de fin", groups={"filtre"})
      */
     private $date_debut;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Assert\GreaterThan(propertyPath="date_debut", message="La date de fin doit etre après la date de début")
+     * @Assert\GreaterThan(propertyPath="date_debut", message="La date de fin doit etre après la date de début", groups={"filtre"})
      */
     private $date_fin;
 
