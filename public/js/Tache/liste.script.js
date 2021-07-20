@@ -37,7 +37,7 @@ xhr.onload = function() {
     results = JSON.parse(results);
 
     if(results != 0) {
-        document.getElementById("td-facture-"+results).innerHTML = "Facturée";
+        document.getElementById("td-facture-"+results).innerHTML = "<div>Facturée</div>";
         //si un message d'erreur de création de facture est present, on le supprime
         let message_facture = document.getElementById("message-facture");
 

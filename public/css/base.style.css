@@ -26,7 +26,7 @@ body {
 .nav-sans-style ol {
     list-style-type: none;
     padding-left: 0;
-    background-color: rgb(13, 201, 208);
+    background-image: linear-gradient(rgba(13, 21, 208, 0.4), rgba(13, 21, 208, 0.1));
     border-radius: 5px;
 }
 
@@ -41,7 +41,7 @@ body {
 }
 
 .active {
-    color: rgb(255, 69, 2);
+    color: rgb(13, 110, 253);
     font-size: 20px;
     font-weight: bold;
 }
@@ -109,4 +109,69 @@ table td {
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
+}
+
+.police-standard-btn {
+    font-family: arial;
+    font-size: 13px;
+}
+
+.custom-btn-primary {
+    background-color: rgb(13, 110, 253);
+    color: white;
+    text-decoration: none;
+    padding: 5px 8px 5px 8px;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.custom-btn-primary:hover {
+    background-color: rgb(11, 94, 215);
+    cursor: pointer;
+}
+
+.custom-btn-danger {
+    background-color: rgb(220, 53, 69);
+    color: white;
+    text-decoration: none;
+    padding: 5px 8px 5px 8px;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.custom-btn-danger:hover {
+    background-color: rgb(187, 45, 59);
+    cursor: pointer;
+}
+
+.custom-btn-success {
+    background-color: rgb(25, 135, 84);
+    color: white;
+    text-decoration: none;
+    padding: 5px 8px 5px 8px;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.custom-btn-success:hover {
+    background-color: rgb(21, 115, 71);
+    cursor: pointer;
+}
+
+.custom-btn-secondary {
+    background-color: rgb(108, 117, 125);
+    color: white;
+    text-decoration: none;
+    padding: 5px 8px 5px 8px;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.custom-btn-secondary:hover {
+    background-color: rgb(92, 99, 106);
+    cursor: pointer;
 }

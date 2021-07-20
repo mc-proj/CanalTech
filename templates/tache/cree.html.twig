@@ -14,11 +14,8 @@
         {{ form_start(form) }}
             {{ form_widget(form) }}
             <div id="container-boutons">
-                <button>Créer une nouvelle tache</button>
-
-                <button>
-                    <a href="{{ path('accueil_taches') }}" style="color: black; text-decoration: none">Retour à la liste des taches</a>
-                </button>
+                <button class="custom-btn-primary">Créer une nouvelle tache</button>
+                <a class="custom-btn-secondary police-standard-btn" href="{{ path('accueil_taches') }}">Retour à la liste des taches</a>
             </div>  
         {{ form_end(form) }}
     </div>

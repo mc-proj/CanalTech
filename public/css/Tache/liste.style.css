@@ -12,3 +12,49 @@
     border-radius: 5px;
     background-color:snow;
 }
+
+.td-gauche {
+    padding-right: 0;
+}
+
+.td-centre {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.td-droite {
+    padding-left: 0;
+}
+
+td div {
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.div-btn {
+    background-color: white;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.div-btn-link {
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.div-btn-link a  {
+    font-family: arial;
+    font-size: 13px;
+}
+
+.td-gauche div {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.td-droite div {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

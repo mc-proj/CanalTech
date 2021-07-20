@@ -28,9 +28,9 @@
     </div>
 
     <div class="container-bouton">
-        <button>
-            <a href="{{ path('nouvelle_tache') }}" class="lien-sans-style">Créer une nouvelle tache</a>
-        </button>
+        <div class="div-btn-link">
+            <a class="custom-btn-success" href="{{ path('nouvelle_tache') }}">Créer une nouvelle tache</a>
+        </div>
     </div>
 
     {% if taches|length > 0 %}
@@ -50,28 +50,34 @@
             <tbody>
                 {% for tache in taches %}
                     <tr style="background-color: {{ tache.getProjet().getCouleur() }}">
-                        <td>{{ tache.getIntitule() }}</td>
-                        <td>{{ tache.getDateDebut()|date("d/m/Y H:i") }}</td>
-                        <td>{{ tache.getDateFin()|date("d/m/Y H:i") }}</td>
+                        <td class="td-gauche"><div>{{ tache.getIntitule() }}</div></td>
+                        <td class="td-centre"><div>{{ tache.getDateDebut()|date("d/m/Y H:i") }}</div></td>
+                        <td class="td-centre"><div>{{ tache.getDateFin()|date("d/m/Y H:i") }}</div></td>
 
-                        <td id="td-facture-{{ tache.getId() }}">
+                        <td class="td-centre" id="td-facture-{{ tache.getId() }}">
                             {% if tache.getEstFacture() %}
-                                Facturée
+                                <div>Facturée</div>
                             {% else %}
-                                <button class="bouton-facture" data-id={{ tache.getId() }}>Marquer facturée</button>
+                                <div class="div-btn">
+                                    <button class="bouton-facture custom-btn-primary" data-id={{ tache.getId() }}>Marquer facturée</button>
+                                </div>
                             {% endif %}
                         </td>
 
-                        <td>{{ tache.getProjet().getNom() }}</td>
-
-                        <td>
-                            <button>
-                                <a href="{{ path('edite_tache', {'id':tache.id}) }}" class="lien-sans-style">Editer</a>
-                            </button>
+                        <td class="td-centre">
+                            <div>{{ tache.getProjet().getNom() }}</div>
                         </td>
 
-                        <td>
-                            <button class="bouton-efface-tache" data-id="{{tache.id}}">Effacer</button>
+                        <td class="td-centre">
+                            <div class="div-btn-link">
+                                <a class="custom-btn-primary" href="{{ path('edite_tache', {'id':tache.id}) }}">Editer</a>
+                            </div>
+                        </td>
+
+                        <td class="td-droite">
+                            <div class="div-btn">
+                                <button class="bouton-efface-tache custom-btn-danger" data-id="{{tache.id}}">Effacer</button>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}

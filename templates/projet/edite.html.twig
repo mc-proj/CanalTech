@@ -14,11 +14,8 @@
         {{ form_start(form) }}
             {{ form_widget(form) }}
             <div id="container-boutons">
-                <button>Editer projet</button>
-
-                <button>
-                    <a href="{{ path('liste_projets') }}" style="color: black; text-decoration: none">Retour à la liste des projets</a>
-                </button>
+                <button class="custom-btn-success">Editer projet</button>
+                <a class="custom-btn-secondary police-standard-btn" href="{{ path('liste_projets') }}">Retour à la liste des projets</a>
             </div>
         {{ form_end(form) }}
     </div>
